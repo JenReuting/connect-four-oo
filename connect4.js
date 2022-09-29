@@ -29,6 +29,15 @@ class Game {
     this.makeHtmlBoard();
   }
 
+  clearBoard() {
+    this.board = [];
+
+    const htmlBoard = document.getElementById("board");
+    while (htmlBoard.firstChild) {
+      htmlBoard.removeChild(htmlBoard.firstChild);
+    }
+  }
+
   makeBoard() {
     for (let y = 0; y < this.height; y++) {
       this.board.push(Array.from({ length: this.width }));
@@ -94,6 +103,9 @@ class Game {
 
   endGame(msg) {
     setTimeout(() => alert(msg), 50);
+    let top = document.querySelector("#column-top");
+    console.log(top);
+    top.removeEventListener("click", (e) => this.handleClick(e))
   }
 
   /** handleClick: handle click of column top to play piece */
@@ -182,4 +194,12 @@ class Game {
   }
 }
 
-const game = new Game(); // Add in our arguments
+let startButton = document.querySelector("#start");
+
+let game = null; // Add in our arguments
+startButton.addEventListener("click", () => {
+  if (game) {
+    game.clearBoard();
+  }
+  game = new Game()}
+  );
